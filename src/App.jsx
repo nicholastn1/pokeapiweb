@@ -1,35 +1,87 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import { GET_POKEMON } from '../api';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pokemonSearchName, setPokemonSearchName] = useState('');
+  const [pokemonAbilities, setPokemonAbilities] = useState([]);
+  const [pokemonName, setPokemonName] = useState([]);
+  const [pokemonSprite, setPokemonSprite] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchPokemonData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { url, options } = GET_POKEMON(pokemonSearchName);
+      const response = await fetch(url, options);
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error('Pokémon not found');
+      }
+
+      const { name, abilities, sprite } = json;
+
+      setPokemonAbilities(abilities);
+      setPokemonSprite(sprite);
+      setPokemonName(name);
+    } catch (err) {
+      setPokemonAbilities([]);
+      setPokemonSprite('');
+      setPokemonName('');
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      fetchPokemonData();
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="App">
+      <div className="search-container">
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Enter Pokémon Name"
+          value={pokemonSearchName}
+          onChange={(e) => setPokemonSearchName(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+        <button className="search-button" onClick={fetchPokemonData}>
+          Search
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <div className="card">
+        {loading && <p>Loading...</p>}
+        {error && <p>Error: {error}</p>}
+        {pokemonSprite && (
+          <div className="upper-container">
+            <div className="sprite-container">
+              <img src={pokemonSprite} alt={pokemonSearchName} />
+            </div>
+            <h2>{pokemonName}</h2>
+          </div>
+        )}
+        {pokemonAbilities.length > 0 && (
+          <div className="abilities-container">
+            <ul>
+              {pokemonAbilities.map((ability, index) => (
+                <li key={index}>{ability}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
