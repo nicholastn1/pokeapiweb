@@ -59,33 +59,43 @@ function App() {
           Search
         </button>
       </div>
-      <div className="card">
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
-        {pokemonSprite && (
-          <div className="upper-container">
-            <div className="sprite-container">
-              <img
-                className="sprite"
-                src={pokemonSprite}
-                alt={pokemonSearchName}
-              />
+      {loading && <p className="loading-text">Loading...</p>}
+      {!pokemonSprite && !pokemonAbilities.length && !error ? null : (
+        <div className="card">
+          {pokemonSprite && (
+            <div className="upper-container">
+              <div className="sprite-container">
+                <img
+                  className="sprite"
+                  src={pokemonSprite}
+                  alt={pokemonSearchName}
+                />
+              </div>
+              <h2>{pokemonName}</h2>
             </div>
-            <h2>{pokemonName}</h2>
-          </div>
-        )}
-        {pokemonAbilities.length > 0 && (
-          <div className="abilities-container">
-            <ul>
-              {pokemonAbilities.map((ability, index) => (
-                <li key={index}>{ability}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+          )}
+          {pokemonAbilities.length > 0 && (
+            <div className="abilities-container">
+              <ul>
+                {pokemonAbilities.map((ability, index) => (
+                  <li key={index}>{ability}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {error ? (
+            <div className="error-container">
+              <img
+                className="error-image"
+                src="../public/no-results.png"
+                alt="No Results"
+              />
+              Invalid Pokémon!
+            </div>
+          ) : null}
+        </div>
+      )}
     </div>
   );
 }
-
 export default App;
