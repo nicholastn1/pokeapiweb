@@ -159,7 +159,6 @@ img {
 
 @media (min-width: 768px) {
   .card {
-    /* width: auto; */
     margin-top: 2rem;
   }
 }

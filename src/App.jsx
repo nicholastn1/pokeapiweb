@@ -87,7 +87,7 @@ function App() {
             <div className="error-container">
               <img
                 className="error-image"
-                src="../public/no-results.png"
+                src="/src/assets/no-results.png"
                 alt="No Results"
               />
               Invalid Pokémon!
