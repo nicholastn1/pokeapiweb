@@ -15,7 +15,7 @@ function App() {
       setLoading(true);
       setError(null);
 
-      const { url, options } = GET_POKEMON(pokemonSearchName);
+      const { url, options } = GET_POKEMON(pokemonSearchName.toLowerCase());
       const response = await fetch(url, options);
       const json = await response.json();
 
@@ -65,7 +65,11 @@ function App() {
         {pokemonSprite && (
           <div className="upper-container">
             <div className="sprite-container">
-              <img src={pokemonSprite} alt={pokemonSearchName} />
+              <img
+                className="sprite"
+                src={pokemonSprite}
+                alt={pokemonSearchName}
+              />
             </div>
             <h2>{pokemonName}</h2>
           </div>

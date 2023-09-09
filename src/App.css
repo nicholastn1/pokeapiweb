@@ -15,8 +15,8 @@
 
 .card {
   background-color: #ffff;
-  width: 30%;
-  height: 40%;
+  width: 20%;
+  height: 44%;
   border-radius: 10px;
   margin-top: 5rem;
   display: flex;
@@ -24,6 +24,7 @@
   flex-direction: column;
   justify-content: center;
   text-align: left;
+  padding: 20px;
 }
 
 .upper-container {
@@ -35,11 +36,21 @@ h2 {
 }
 
 .sprite-container {
-  border-radius: 5px;
+  border-radius: 8px;
   background-color: #ffff;
+  border: 2px solid #eff1f7;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 10px 40px;
+}
+
+.sprite {
+  width: 200px;
+  height: 200px;
+  border-radius: 3px;
 }
 
 .abilities-container {
+  font-size: 15px;
 }
 
 h1 {
@@ -112,4 +123,18 @@ li {
 img {
   width: 200px;
   height: 200px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: auto;
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: auto;
+    margin-top: 2rem;
+  }
 }
